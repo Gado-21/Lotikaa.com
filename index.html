@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 Lotika Site - Advanced Lottery Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #22c55e, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card {
+            background: rgba(30, 30, 30, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            background: linear-gradient(45deg, #f59e0b, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 2rem 0;
+            text-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .lottery-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .digit-input {
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .digit-input:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        }
+
+        .submissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .submission-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .taken-numbers {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .taken-number {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #fca5a5;
+        }
+
+        .user-search {
+            margin-bottom: 2rem;
+        }
+
+        .search-results {
+            margin-top: 1rem;
+        }
+
+        .user-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .user-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .info-label {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .admin-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .control-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #22c55e;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #22c55e;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .timer-display {
+                font-size: 2rem;
+            }
+
+            .digit-input {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+            }
+
+            .lottery-input {
+                gap: 5px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.875rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .control-title {
+                font-size: 1.125rem;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .user-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .timer-display {
+                font-size: 1.5rem;
+            }
+
+            .digit-input {
+                width: 35px;
+                height: 35px;
+                font-size: 1.25rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.25rem;
+            }
+
+            .user-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px;">
+        <div class="card" style="max-width: 400px; width: 100%;">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #22c55e;">Login to Continue</h2>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: #9ca3af;">Phone Number</label>
+                <input type="text" id="phone-input" class="input" placeholder="Enter your phone number" maxlength="15">
+            </div>
+
+            <button onclick="login()" class="btn" style="width: 100%; margin-bottom: 1rem;">Login</button>
+
+            <div id="login-message"></div>
+
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; color: #9ca3af; font-size: 0.875rem;">
+                <p style="font-size: 18px;">Good Luck!!!</p>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- User Dashboard Page -->
+    <div id="user-page" class="container hidden">
+        <div class="header">
+            <div class="logo">🎰 Lotika Site</div>
+            <div>
+                <span id="user-phone" style="margin-right: 1rem; color: #9ca3af;"></span>
+                <span id="user-chances" style="margin-right: 1rem; color: #22c55e; font-weight: bold;"></span>
+                <button onclick="logout()" class="btn btn-secondary">Go Back</button>
+            </div>
+        </div>
+
+        <!-- Timer Card -->
+        <div class="card">
+            <h2 style="text-align: center; color: #22c55e; margin-bottom: 1rem;">Lottery Timer</h2>
+            <div id="timer" class="timer-display">03:00:00</div>
+            <p style="text-align: center; color: #9ca3af;">Time remaining to submit your lucky numbers</p>
+        </div>
+
+        <!-- Lottery Submission Card -->
+        <div class="card">
+            <h2 style="color: #22c55e; margin-bottom: 1rem;">Submit Your Lucky Numbers</h2>
+            <p style="color: #9ca3af; margin-bottom: 1rem;">Enter your 6-digit lottery number:</p>
+            
+            <div class="lottery-input">
+                <input type="text" id="digit-0" class="digit-input" maxlength="1" oninput="moveToNext(0)" onkeydown="handleBackspace(0, event)">
+                <input type="text" id="digit-1" class="digit-input" maxlength="1" oninput="moveToNext(1)" onkeydown="handleBackspace(1, event)">
+                <input type="text" id="digit-2" class="digit-input" maxlength="1" oninput="moveToNext(2)" onkeydown="handleBackspace(2, event)">
+                <input type="text" id="digit-3" class="digit-input" maxlength="1" oninput="moveToNext(3)" onkeydown="handleBackspace(3, event)">
+                <input type="text" id="digit-4" class="digit-input" maxlength="1" oninput="moveToNext(4)" onkeydown="handleBackspace(4, event)">
+                <input type="text" id="digit-5" class="digit-input" maxlength="1" oninput="moveToNext(5)" onkeydown="handleBackspace(5, event)">
+            </div>
+
+            <div style="text-align: center;">
+                <button onclick="submitLottery()" class="btn">Submit Numbers</button>
+            </div>
+
+            <div id="submission-message"></div>
+        </div>
+
+        <!-- Your Submissions -->
+        <div class="card">
+            <h2 style="color: #22c55e; margin-bottom: 1rem;">Your Submissions</h2>
+            <div id="user-submissions"></div>
+        </div>
+
+        <!-- Taken Numbers -->
+        <div class="card">
+            <h2 style="color: #ef4444; margin-bottom: 1rem;">Taken Numbers</h2>
+            <p style="color: #9ca3af; margin-bottom: 1rem;">These numbers are already taken by other players:</p>
+            <div id="taken-numbers" class="taken-numbers"></div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Page -->
+    <div id="admin-page" class="container hidden">
+        <div class="header">
+            <div class="logo">🎰 Lotika Admin</div>
+            <div>
+                <span id="admin-phone" style="margin-right: 1rem; color: #9ca3af;"></span>
+                <button onclick="logout()" class="btn btn-secondary">Go Back</button>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div id="total-users" class="stat-number">0</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-card">
+                <div id="total-submissions" class="stat-number">0</div>
+                <div class="stat-label">Total Submissions</div>
+            </div>
+            <div class="stat-card">
+                <div id="active-users" class="stat-number">0</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+        </div>
+
+        <!-- Admin Controls -->
+        <div class="admin-controls">
+            <div class="control-card">
+                <div class="control-title">Timer Control</div>
+                <div style="margin-bottom: 1rem;">
+                    <div id="admin-timer" class="timer-display" style="font-size: 2rem;">03:00:00</div>
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button onclick="pauseTimer()" class="btn">Pause</button>
+                    <button onclick="resetTimer()" class="btn btn-secondary">Reset</button>
+                </div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-title">User Management</div>
+                <div style="margin-bottom: 1rem;">
+                    <input type="text" id="search-phone" class="input" placeholder="Search by phone number..." oninput="searchUser()">
+                </div>
+                <div id="search-message"></div>
+                <div id="search-results" class="search-results"></div>
+            </div>
+
+            <div class="control-card">
+                <div class="control-title">System Actions</div>
+                <button onclick="resetAllSubmissions()" class="btn btn-secondary" style="width: 100%; margin-bottom: 0.5rem;">Reset All Submissions</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let timer = 10800; // 3 hours in seconds
+        let timerInterval = null;
+        let currentUser = null;
+
+        // Mock data
+        let mockUsers = [
+            { id: 1, phoneNumber: '0921025143', isAdmin: true, lotteryChances: 5 },
+            { id: 2, phoneNumber: '0911830819', isAdmin: false, lotteryChances: 3 },
+            { id: 3, phoneNumber: '0987654321', isAdmin: false, lotteryChances: 2 },
+            { id: 4, phoneNumber: '0912345678', isAdmin: false, lotteryChances: 1 },
+            { id: 5, phoneNumber: '0998877665', isAdmin: false, lotteryChances: 4 }
+        ];
+
+        let mockSubmissions = [];
+
+        // Data persistence functions
+        function saveToStorage() {
+            const data = {
+                users: mockUsers,
+                submissions: mockSubmissions,
+                timer: timer,
+                lastSaved: Date.now()
+            };
+            localStorage.setItem('lotikaData', JSON.stringify(data));
+        }
+
+        function loadFromStorage() {
+            const saved = localStorage.getItem('lotikaData');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    mockUsers = data.users || mockUsers;
+                    mockSubmissions = data.submissions || [];
+                    
+                    // Calculate elapsed time since last save
+                    if (data.lastSaved && data.timer) {
+                        const elapsed = Math.floor((Date.now() - data.lastSaved) / 1000);
+                        timer = Math.max(0, data.timer - elapsed);
+                    }
+                } catch (e) {
+                    console.log('Error loading saved data:', e);
+                }
+            }
+        }
+
+        // Auto-save timer state every 30 seconds
+        setInterval(saveToStorage, 30000);
+
+        // Authentication functions
+        function login() {
+            const phoneInput = document.getElementById('phone-input');
+            const phoneNumber = phoneInput.value.trim();
+
+            if (!phoneNumber) {
+                showMessage('login-message', 'Please enter your phone number', 'error');
+                return;
+            }
+
+            const user = mockUsers.find(u => u.phoneNumber === phoneNumber);
+            
+            if (user) {
+                currentUser = user;
+                showMessage('login-message', 'Login successful! Redirecting...', 'success');
+                
+                setTimeout(() => {
+                    document.getElementById('login-page').style.display = 'none';
+                    
+                    if (user.isAdmin) {
+                        showAdminDashboard();
+                    } else {
+                        showUserDashboard();
+                    }
+                }, 1000);
+            } else {
+                // Create new user
+                const newUser = {
+                    id: mockUsers.length + 1,
+                    phoneNumber: phoneNumber,
+                    isAdmin: false,
+                    lotteryChances: 0
+                };
+                
+                mockUsers.push(newUser);
+                currentUser = newUser;
+                saveToStorage();
+                
+                showMessage('login-message', 'New account created! Redirecting...', 'success');
+                
+                setTimeout(() => {
+                    document.getElementById('login-page').style.display = 'none';
+                    showUserDashboard();
+                }, 1000);
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            stopTimer();
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('user-page').classList.add('hidden');
+            document.getElementById('admin-page').classList.add('hidden');
+            document.getElementById('phone-input').value = '';
+            showMessage('login-message', '', '');
+        }
+
+        function showUserDashboard() {
+            document.getElementById('user-page').classList.remove('hidden');
+            document.getElementById('user-phone').textContent = currentUser.phoneNumber;
+            document.getElementById('user-chances').textContent = `Chances: ${currentUser.lotteryChances}`;
+            
+            loadUserSubmissions();
+            loadTakenNumbers();
+            updateTimerDisplay();
+            
+            if (timer > 0) {
+                startTimer();
+            }
+            
+            // Focus first digit input
+            setTimeout(() => {
+                document.getElementById('digit-0').focus();
+            }, 100);
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('admin-page').classList.remove('hidden');
+            document.getElementById('admin-phone').textContent = currentUser.phoneNumber;
+            
+            loadAdminData();
+            updateTimerDisplay();
+            
+            if (timer > 0) {
+                startTimer();
+            }
+        }
+
+        // Timer functions
+        function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            timerInterval = setInterval(() => {
+                if (timer > 0) {
+                    timer--;
+                    updateTimerDisplay();
+                } else {
+                    stopTimer();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function pauseTimer() {
+            stopTimer();
+            saveToStorage();
+            showMessage('search-message', 'Timer paused successfully!', 'success');
+        }
+
+        function resetTimer() {
+            stopTimer();
+            timer = 10800; // Reset to 3 hours
+            updateTimerDisplay();
+            saveToStorage();
+            showMessage('search-message', 'Timer reset to 3 hours!', 'success');
+            
+            if (timer > 0) {
+                startTimer();
+            }
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(timer / 3600);
+            const minutes = Math.floor((timer % 3600) / 60);
+            const seconds = timer % 60;
+            
+            const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const timerElement = document.getElementById('timer');
+            const adminTimerElement = document.getElementById('admin-timer');
+            
+            if (timerElement) timerElement.textContent = timeString;
+            if (adminTimerElement) adminTimerElement.textContent = timeString;
+        }
+
+        // Lottery functions
+        function moveToNext(currentIndex) {
+            const currentInput = document.getElementById(`digit-${currentIndex}`);
+            const value = currentInput.value;
+            
+            // Only allow digits
+            if (!/^\d$/.test(value)) {
+                currentInput.value = '';
+                return;
+            }
+            
+            // Move to next input
+            if (value && currentIndex < 5) {
+                document.getElementById(`digit-${currentIndex + 1}`).focus();
+            }
+        }
+
+        function handleBackspace(currentIndex, event) {
+            if (event.key === 'Backspace' && !event.target.value && currentIndex > 0) {
+                document.getElementById(`digit-${currentIndex - 1}`).focus();
+            }
+        }
+
+        function submitLottery() {
+            if (timer <= 0) {
+                showMessage('submission-message', 'Time is up! No more submissions allowed.', 'error');
+                return;
+            }
+
+            if (currentUser.lotteryChances <= 0) {
+                showMessage('submission-message', 'You have no lottery chances remaining. Contact admin for more chances.', 'error');
+                return;
+            }
+
+            let lotteryNumber = '';
+            for (let i = 0; i < 6; i++) {
+                const digit = document.getElementById(`digit-${i}`).value;
+                if (!digit) {
+                    showMessage('submission-message', 'Please fill in all 6 digits', 'error');
+                    return;
+                }
+                lotteryNumber += digit;
+            }
+
+            // Check if number is already taken
+            const isTaken = mockSubmissions.some(sub => sub.lotteryNumber === lotteryNumber);
+            if (isTaken) {
+                showMessage('submission-message', 'This number is already taken! Please choose different numbers.', 'error');
+                return;
+            }
+
+            // Add submission
+            const submission = {
+                id: mockSubmissions.length + 1,
+                userId: currentUser.id,
+                phoneNumber: currentUser.phoneNumber,
+                lotteryNumber: lotteryNumber,
+                timestamp: new Date().toLocaleString()
+            };
+
+            mockSubmissions.push(submission);
+            
+            // Decrease user's chances
+            currentUser.lotteryChances--;
+            const userIndex = mockUsers.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                mockUsers[userIndex] = currentUser;
+            }
+
+            saveToStorage();
+
+            showMessage('submission-message', `Numbers ${lotteryNumber} submitted successfully! Remaining chances: ${currentUser.lotteryChances}`, 'success');
+            
+            // Update display
+            document.getElementById('user-chances').textContent = `Chances: ${currentUser.lotteryChances}`;
+            
+            // Clear inputs
+            for (let i = 0; i < 6; i++) {
+                document.getElementById(`digit-${i}`).value = '';
+            }
+            document.getElementById('digit-0').focus();
+            
+            loadUserSubmissions();
+            loadTakenNumbers();
+        }
+
+        function loadUserSubmissions() {
+            const userSubmissions = mockSubmissions.filter(sub => sub.userId === currentUser.id);
+            const container = document.getElementById('user-submissions');
+            
+            if (userSubmissions.length === 0) {
+                container.innerHTML = '<p style="color: #9ca3af;">No submissions yet</p>';
+                return;
+            }
+
+            container.innerHTML = userSubmissions.map(sub => `
+                <div class="submission-card">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #22c55e; margin-bottom: 0.5rem;">${sub.lotteryNumber}</div>
+                    <div style="color: #9ca3af; font-size: 0.875rem;">Submitted: ${sub.timestamp}</div>
+                </div>
+            `).join('');
+        }
+
+        function loadTakenNumbers() {
+            const takenNumbers = [...new Set(mockSubmissions.map(sub => sub.lotteryNumber))];
+            const container = document.getElementById('taken-numbers');
+            
+            if (takenNumbers.length === 0) {
+                container.innerHTML = '<p style="color: #9ca3af;">No numbers taken yet</p>';
+                return;
+            }
+
+            container.innerHTML = takenNumbers.map(number => `
+                <div class="taken-number">${number}</div>
+            `).join('');
+        }
+
+        // Admin functions
+        function loadAdminData() {
+            updateStats();
+        }
+
+        function updateStats() {
+            const totalUsers = mockUsers.length;
+            const totalSubmissions = mockSubmissions.length;
+            const activeUsers = new Set(mockSubmissions.map(sub => sub.userId)).size;
+
+            document.getElementById('total-users').textContent = totalUsers;
+            document.getElementById('total-submissions').textContent = totalSubmissions;
+            document.getElementById('active-users').textContent = activeUsers;
+        }
+
+        function searchUser() {
+            const searchPhone = document.getElementById('search-phone').value.trim();
+            const resultsContainer = document.getElementById('search-results');
+            
+            if (!searchPhone) {
+                resultsContainer.innerHTML = '';
+                showMessage('search-message', '', '');
+                return;
+            }
+
+            const user = mockUsers.find(u => u.phoneNumber.includes(searchPhone));
+            
+            if (!user) {
+                resultsContainer.innerHTML = '';
+                showMessage('search-message', 'No user found with that phone number', 'error');
+                return;
+            }
+
+            const userSubmissions = mockSubmissions.filter(sub => sub.userId === user.id);
+            const lastActivity = userSubmissions.length > 0 ? 
+                userSubmissions[userSubmissions.length - 1].timestamp : 'No activity';
+
+            showMessage('search-message', '', '');
+            resultsContainer.innerHTML = `
+                <div class="user-card">
+                    <div class="user-header">
+                        <h3 style="color: #22c55e;">User Profile</h3>
+                        <span style="color: ${user.isAdmin ? '#f59e0b' : '#9ca3af'};">
+                            ${user.isAdmin ? 'Admin' : 'User'}
+                        </span>
+                    </div>
+                    
+                    <div class="user-info">
+                        <div class="info-item">
+                            <div class="info-label">Phone Number</div>
+                            <div class="info-value">${user.phoneNumber}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Lottery Chances</div>
+                            <div class="info-value">${user.lotteryChances}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Total Submissions</div>
+                            <div class="info-value">${userSubmissions.length}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Last Activity</div>
+                            <div class="info-value">${lastActivity}</div>
+                        </div>
+                    </div>
+
+                    <div class="user-actions">
+                        <input type="number" id="chances-input-${user.id}" placeholder="Add chances" min="0" style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px; color: #e0e0e0; margin-right: 0.5rem; width: 120px;">
+                        <button onclick="updateUserChances(${user.id})" class="btn" style="padding: 8px 16px; font-size: 0.875rem;">Update Chances</button>
+                        <button onclick="removeUser(${user.id})" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.875rem;">Remove User</button>
+                    </div>
+
+                    ${userSubmissions.length > 0 ? `
+                        <div style="margin-top: 1rem;">
+                            <h4 style="color: #9ca3af; margin-bottom: 0.5rem;">Submissions:</h4>
+                            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                                ${userSubmissions.map(sub => `
+                                    <span style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 4px 8px; border-radius: 6px; font-weight: bold; color: #22c55e;">
+                                        ${sub.lotteryNumber}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function updateUserChances(userId) {
+            const chancesInput = document.getElementById(`chances-input-${userId}`);
+            const additionalChances = parseInt(chancesInput.value);
+            
+            if (!additionalChances || additionalChances < 0) {
+                showMessage('search-message', 'Please enter a valid number of chances', 'error');
+                return;
+            }
+
+            const userIndex = mockUsers.findIndex(u => u.id === userId);
+            if (userIndex !== -1) {
+                mockUsers[userIndex].lotteryChances += additionalChances;
+                saveToStorage();
+                showMessage('search-message', `Added ${additionalChances} chances successfully!`, 'success');
+                chancesInput.value = '';
+                searchUser(); // Refresh the user display
+                updateStats();
+                
+                // Update current user display if it's the same user
+                if (currentUser && currentUser.id === userId) {
+                    currentUser.lotteryChances = mockUsers[userIndex].lotteryChances;
+                    document.getElementById('user-chances').textContent = `Chances: ${currentUser.lotteryChances}`;
+                }
+            }
+        }
+
+        function removeUser(userId) {
+            if (!confirm('Are you sure you want to remove this user? This will also remove all their submissions.')) {
+                return;
+            }
+
+            try {
+                // Remove user
+                mockUsers = mockUsers.filter(u => u.id !== userId);
+                
+                // Remove user's submissions
+                mockSubmissions = mockSubmissions.filter(sub => sub.userId !== userId);
+                
+                saveToStorage();
+                showMessage('search-message', 'User removed successfully!', 'success');
+                
+                // Clear search results
+                document.getElementById('search-results').innerHTML = '';
+                document.getElementById('search-phone').value = '';
+                
+                updateStats();
+                loadTakenNumbers();
+            } catch (error) {
+                showMessage('search-message', 'Failed to remove user: ' + error.message, 'error');
+            }
+        }
+
+        function resetAllSubmissions() {
+            if (!confirm('Are you sure you want to reset all submitted lottery numbers? This action cannot be undone.')) {
+                return;
+            }
+            
+            mockSubmissions = [];
+            saveToStorage();
+            showMessage('search-message', 'All submissions have been reset!', 'success');
+            loadAdminData();
+            loadTakenNumbers();
+        }
+
+        // Utility Functions
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            
+            element.innerHTML = message ? `<div class="message ${type}">${message}</div>` : '';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved data first
+            loadFromStorage();
+            
+            // Show login page on load
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('user-page').classList.add('hidden');
+            document.getElementById('admin-page').classList.add('hidden');
+            
+            updateTimerDisplay();
+            
+            // Start timer if it's not expired
+            if (timer > 0) {
+                startTimer();
+            }
+            
+            // Focus first lottery digit when user page loads
+            setTimeout(() => {
+                const firstDigit = document.getElementById('digit-0');
+                if (firstDigit && !document.getElementById('user-page').classList.contains('hidden')) {
+                    firstDigit.focus();
+                }
+            }, 100);
+        });
+
+        // Handle Enter key for login
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const loginPage = document.getElementById('login-page');
+                if (loginPage.style.display !== 'none') {
+                    login();
+                }
+            }
+        });
+
+        // Handle Enter key for lottery submission
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const userPage = document.getElementById('user-page');
+                if (!userPage.classList.contains('hidden')) {
+                    // Check if all digits are filled
+                    let allFilled = true;
+                    for (let i = 0; i < 6; i++) {
+                        if (!document.getElementById(`digit-${i}`).value) {
+                            allFilled = false;
+                            break;
+                        }
+                    }
+                    if (allFilled) {
+                        submitLottery();
+                    }
+                }
+            }
+        });
+
+        // Save data when page is about to unload
+        window.addEventListener('beforeunload', function() {
+            saveToStorage();
+        });
+    </script>
+</body>
+</html>
